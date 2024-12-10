@@ -14,7 +14,7 @@ from datasets import *
 from bodyhands import add_bodyhands_config
 from bodyhands import CustomVisualizer
 from torch.utils.data import Dataset, DataLoader
-
+import tqdm
 
 
 class InferenceDataset(Dataset):
@@ -91,9 +91,8 @@ dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, collate_f
 
 length = len(dataloader)
 index = 0
-for batch in dataloader:
+for batch in tqdm.tqdm(dataloader):
     index +=1
-    print(f'Processing batch {index}/{length}')
     img, video_name, img_name = batch
     with torch.no_grad():
         outputs = model(img,256,344)
